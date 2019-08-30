@@ -1,0 +1,21 @@
+#include <stdio.h>
+int main () {
+   int counter = 1;
+   int rows;
+   printf("Enter maximum number: \n");
+   scanf("%d", &rows);
+   /* while loop prints numbers from 0 to max_number */
+   printf("while loop:\n");
+   while (counter <= rows)
+   {
+   
+       int counter_2 = 1;
+       while (counter_2<=counter)
+   {
+      printf("*");
+    counter_2++;
+   }
+      printf("\n");
+      counter = counter + 1;
+   }
+return 0;}
