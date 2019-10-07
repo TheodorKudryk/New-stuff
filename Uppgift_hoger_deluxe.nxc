@@ -1,0 +1,66 @@
+task main(){
+ int tmp, closestNumber,closestDegrees,degrees=0;//tmp is current distance to wall, closestNumber is currently the closest distance to wall, closestDegrees is the
+                                                 //degrees to closestNumber, degrees is the current degrees
+ SetSensorLowspeed(IN_4);
+ //Turn a whole 360 degrees and check in intervalls of 10 degrees how far away the wall is
+   closestNumber = SensorUS(IN_4);
+ while(degrees<=25) {
+   tmp = SensorUS(IN_4);
+   if(tmp<=closestNumber){
+     closestNumber=tmp;
+     closestDegrees=degrees;
+   }
+   OnFwd(OUT_A,50);
+   OnFwd(OUT_B,-50);
+   Wait(100);
+   //Off(OUT_AB);
+   //Wait(10);
+   degrees++;
+ }
+ //Reverese angle to the closest way to the wall
+ /*for(int i=1;i<=(50-closestDegrees);i++){
+   OnFwd(OUT_A,-60);
+   OnFwd(OUT_B,60);
+   Wait(100);
+   Off(OUT_AB);
+   Wait(10);
+ }*/
+ while(tmp>(closestNumber+2)){
+   tmp = SensorUS(IN_4);
+   OnFwd(OUT_A,-50);
+   OnFwd(OUT_B,50);
+   Wait(50);
+   //Off(OUT_AB);
+   //Wait(10);
+ }
+
+
+  //Driving towards wall until the wall is less than 30 cm from the USsensor
+  OnFwdSync(OUT_AB, 100,0);
+  Wait(3000);
+  Off(OUT_AB);
+  OnFwd(OUT_AB, -50);
+  Wait(600);
+  //Turns 90 degrees
+  OnFwd(OUT_A, 50);
+  OnFwd(OUT_B, -50);
+  Wait(697);
+  Off(OUT_AB);
+  //Drives 2.5 meters
+  OnFwdSync(OUT_AB, 70, -1.2);
+  Wait(10000);
+  Off(OUT_AB);
+  //Turns 90 degrees
+  OnFwd(OUT_A, 50);
+  OnFwd(OUT_B, -50);
+  Wait(697);
+  Off(OUT_AB);
+  // driving to the wall on the other side
+  OnFwdSync(OUT_AB, 70,0);
+  while(SensorUS(IN_4) > 30){
+    Wait(300);
+  }
+   Off(OUT_AB);
+  //Drop off book
+  OnFwdSync(OUT_C, -40,0);
+}
